@@ -12,7 +12,7 @@ class App extends Component {
     super()
     this.app = firebase.initializeApp(DB_CONFIG)
 
-    this.database = this.app.database().ref()
+    this.database = this.app.database().ref('hero')
 
     this.state = {
       hero_caption: null,
@@ -20,8 +20,8 @@ class App extends Component {
     }
   }
   componentDidMount(){
-    const heroImage = this.database.child('hero_image')
-    const heroCaption = this.database.child('hero_caption')
+    const heroImage = this.database.child('image')
+    const heroCaption = this.database.child('caption')
 
     heroImage.on('value', snaphot => {
       this.setState({

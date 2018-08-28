@@ -1,12 +1,12 @@
 
 // Initialize Firebase
 const DB_CONFIG = {
-    apiKey: "AIzaSyD-kVGx_kQZ-AEqNxXQ8SFSAL6RrCmo4qE",
-    authDomain: "portfolio-57673.firebaseapp.com",
-    databaseURL: "https://portfolio-57673.firebaseio.com",
-    projectId: "portfolio-57673",
-    storageBucket: "portfolio-57673.appspot.com",
-    messagingSenderId: "837139200300"
+    apiKey: "AIzaSyAnJbH6xt5zR5V8eOg1zTe6Psget9LqYBM",
+    authDomain: "portfolio-fa728.firebaseapp.com",
+    databaseURL: "https://portfolio-fa728.firebaseio.com",
+    projectId: "portfolio-fa728",
+    storageBucket: "portfolio-fa728.appspot.com",
+    messagingSenderId: "9107272578"
 }
 
 export default DB_CONFIG
