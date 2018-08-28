@@ -15,10 +15,13 @@ class App extends Component {
     this.database = this.app.database().ref('hero')
 
     this.state = {
-      hero_caption: null,
+      hero_caption: '',
       hero_image: null
     }
+
+    this.onChangeHandler = this.onChangeHandler.bind(this);
   }
+
   componentDidMount(){
     const heroImage = this.database.child('image')
     const heroCaption = this.database.child('caption')
@@ -35,6 +38,9 @@ class App extends Component {
       })
     })
   }
+  onChangeHandler(e){
+    this.setState({hero_caption: e.target.value})
+  }
 
   render() {
     return (
@@ -43,7 +49,10 @@ class App extends Component {
           <h1>Welcome to React</h1>
         </header>
         <img className="hero-image" src={this.state.hero_image} alt={this.state.hero_caption}/>
-        <p>{this.state.hero_caption}</p>
+        <form>
+          <input type="text" value={this.state.hero_caption} onChange={this.onChangeHandler} />
+          <p>{this.state.hero_caption}</p>
+        </form>
       </div>
     );
   }
