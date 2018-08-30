@@ -1,7 +1,4 @@
 .hero-image {
-    min-height: 330px;
-    background-size: cover;
-    background-position: center center;
-    display: -webkit-flex;
     display: flex;
+    width: 100%;
 }
