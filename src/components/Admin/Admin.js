@@ -19,11 +19,7 @@ class CMS extends Component {
         super()
         this.state = {
             authenticated: false,
-            heros:[],
-            brand:'',
-            image:'',
-            caption:'',
-            paragraph:''
+            data:[],
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -58,12 +54,12 @@ class CMS extends Component {
     }
     componentDidMount(){
         databaseHeroRef.on('value', (snapshot) => {
-            let heros = snapshot.val();
+            let data = snapshot.val();
+
+            let newData = this.state.data.concat([data])
             //console.log(heros)
             this.setState({
-            image: heros.image,
-            caption: heros.caption,
-            brand: heros.brand
+                data:newData
             });
         })
     }
@@ -96,41 +92,14 @@ class CMS extends Component {
         if(this.state.authenticated){
             loggedIn =
                 <form>
-                    <label>Brand</label>
-                    <input
-                        text="text"
-                        name="brand"
-                        onChange={this.onChangeHandler}
-                        value={this.state.brand}
-                        onBlur={this.onSubmitHandler}
-                    />
-                    <br />
-                    <label>Hero Image</label>
-                    <input
-                        type="text"
-                        name="image"
-                        onChange={this.onChangeHandler}
-                        value={this.state.image}
-                        onBlur={this.onSubmitHandler}
-                    />
-                    <br />
-                    <label>Hero Caption</label>
-                    <input
-                        type="text"
-                        name="caption"
-                        value={this.state.caption}
-                        onChange={this.onChangeHandler}
-                        onBlur={this.onSubmitHandler}
-                    />
-                    <br />
-                    <label>Paragraph</label>
-                    <input
-                        type="text"
-                        name="paragraph"
-                        value={this.state.paragraph}
-                        onChange={this.onChangeHandler}
-                        onBlur={this.onSubmitHandler}
-                    />
+
+                    {this.state.data.map(d =>
+                        <div key={d.id}>
+                            <input text="text" name="brand" onChange={this.onChangeHandler} value={d.brand} onBlur={this.onSubmitHandler} />
+                        </div>
+                    )}
+
+
                 </form>
         }
         return (
