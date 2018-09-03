@@ -13,7 +13,7 @@ const databaseHeroRef = app.database().ref('hero')
 
 
 
-class CMS extends Component {
+class Admin extends Component {
 
     constructor(){
         super()
@@ -32,12 +32,15 @@ class CMS extends Component {
         databaseHeroRef.update({
             [e.target.name]: e.target.value
         });
-        this.setState({value: ''})
+
+        this.setState({value:''})
     }
 
-
     onChangeHandler(e){
-        this.setState({ [e.target.name]: e.target.value });
+
+        this.setState({
+            [e.target.name]: e.target.value
+        });
     }
 
     setCurrentUser(user) {
@@ -50,8 +53,8 @@ class CMS extends Component {
             authenticated: false
           })
         }
-
     }
+
     componentDidMount(){
         databaseHeroRef.on('value', (snapshot) => {
             let data = snapshot.val();
@@ -61,7 +64,9 @@ class CMS extends Component {
             this.setState({
                 data:newData
             });
+
         })
+
     }
 
     componentWillMount() {
@@ -88,17 +93,19 @@ class CMS extends Component {
     render() {
 
         let loggedIn;
-
         if(this.state.authenticated){
             loggedIn =
-                <form>
-
+                <form >
                     {this.state.data.map(d =>
                         <div key={d.id}>
-                            <input text="text" name="brand" onChange={this.onChangeHandler} value={d.brand} onBlur={this.onSubmitHandler} />
+                            <p>{d.brand}</p>
+                            <input text="text" name="brand" onChange={this.onChangeHandler} value={this.state.brand} onSubmit={this.onSubmitHandler}/>
+                            <br />
+                            <p>{d.caption}</p>
+                            <input text="text" name="caption" onChange={this.onChangeHandler} value={this.state.caption}  />
+                            <br />
                         </div>
                     )}
-
 
                 </form>
         }
@@ -116,4 +123,4 @@ class CMS extends Component {
         );
     }
 }
-export default CMS;
+export default Admin;
