@@ -6,7 +6,7 @@ import './Hero.css'
 
 
 const app = Firebase
-const databaseHeroRef = app.database().ref('hero')
+const databaseHeroRef = app.database().ref()
 
 
 class Hero extends Component {
@@ -38,7 +38,9 @@ class Hero extends Component {
     render() {
         return(
             <div>
-                {this.state.data.map(d =>
+                {console.log(this.state.data)}
+                {
+                    /*this.state.data.map(d =>
                     <div key={d.id}>
 
                         <h1>{d.brand}</h1>
@@ -55,7 +57,7 @@ class Hero extends Component {
                         )}
 
                     </div>
-                )}
+                ) */}
             </div>
         )
     }

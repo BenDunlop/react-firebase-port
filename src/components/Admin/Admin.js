@@ -9,7 +9,7 @@ import Logout from '../Logout/Logout'
 
 
 const app = Firebase
-const databaseHeroRef = app.database().ref('hero')
+const databaseHeroRef = app.database().ref('index')
 
 
 
@@ -20,6 +20,10 @@ class Admin extends Component {
         this.state = {
             authenticated: false,
             data:[],
+            id: null,
+            brand:'',
+            image:'',
+            caption:'',
         }
 
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -27,20 +31,26 @@ class Admin extends Component {
 
     }
 
-    onSubmitHandler(e){
-        e.preventDefault();
-        databaseHeroRef.update({
-            [e.target.name]: e.target.value
-        });
+    onSubmitHandler(brand, image, caption){
 
-        this.setState({value:''})
+        let myRef = databaseHeroRef.push()
+
+        myRef.set({
+            brand: this.state.brand,
+            image: this.state.image,
+            caption: this.state.caption,
+        })
+
+        this.setState({
+            value: myRef
+        })
     }
 
     onChangeHandler(e){
-
         this.setState({
             [e.target.name]: e.target.value
         });
+        console.log([e.target.value])
     }
 
     setCurrentUser(user) {
@@ -54,8 +64,8 @@ class Admin extends Component {
           })
         }
     }
+    componentWillMount() {
 
-    componentDidMount(){
         databaseHeroRef.on('value', (snapshot) => {
             let data = snapshot.val();
 
@@ -66,10 +76,6 @@ class Admin extends Component {
             });
 
         })
-
-    }
-
-    componentWillMount() {
         this.removeAuthListener = app.auth().onAuthStateChanged((user) => {
           if (user) {
             this.setState({
@@ -82,7 +88,6 @@ class Admin extends Component {
             })
           }
         })
-
     }
 
     componentWillUnmount() {
@@ -93,21 +98,37 @@ class Admin extends Component {
     render() {
 
         let loggedIn;
-        if(this.state.authenticated){
+        if(this.state.authenticated) {
             loggedIn =
-                <form >
-                    {this.state.data.map(d =>
-                        <div key={d.id}>
-                            <p>{d.brand}</p>
-                            <input text="text" name="brand" onChange={this.onChangeHandler} value={this.state.brand} onSubmit={this.onSubmitHandler}/>
-                            <br />
-                            <p>{d.caption}</p>
-                            <input text="text" name="caption" onChange={this.onChangeHandler} value={this.state.caption}  />
-                            <br />
-                        </div>
-                    )}
 
-                </form>
+            <form onSubmit={this.onSubmitHandler}>
+                <label>Brand</label>
+                <input
+                    text="text"
+                    name="brand"
+                    onChange={this.onChangeHandler}
+                    value={this.state.brand}
+                />
+                <br />
+                <label>Hero Image</label>
+                <input
+                    type="text"
+                    name="image"
+                    onChange={this.onChangeHandler}
+                    value={this.state.image}
+                />
+                <br />
+                <label>Hero Caption</label>
+                <input
+                    type="text"
+                    name="caption"
+                    value={this.state.caption}
+                    onChange={this.onChangeHandler}
+                />
+                <br />
+
+                <button type="submit">Submit</button>
+            </form>
         }
         return (
             <BrowserRouter>
